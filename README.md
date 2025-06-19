@@ -1,77 +1,99 @@
-# Automating Document Conversion and Watermarking with Amazon S3 Object Lambda
+# 📄 Automating Document Conversion & Watermarking with Amazon S3 Object Lambda
 
-# Introduction
+> 🛠️ **Tech Stack**: AWS Lambda · S3 Object Lambda · Docker · API Gateway · Cognito · DynamoDB · ECR · CloudWatch
 
-In this guide, we will walk through the process of setting up an automated system for converting and watermarking documents using Amazon S3 Object Lambda. This system integrates AWS services such as S3, Lambda, DynamoDB, Cognito, API Gateway, and ECR to create a secure and scalable document conversion pipeline.
+## 🚀 Project Overview
 
-This project will provide experience in:
+In this project, we build a **serverless, secure, and scalable** document processing system using Amazon Web Services. The goal? Automatically convert uploaded documents to PDF and apply a watermark—all without managing any servers.
 
-- AWS Identity and Access Management (IAM).
-- Secure API authentication with Amazon Cognito.
-- Serverless computing with AWS Lambda.
-- Deploying and managing Docker-based applications in AWS.
-- Using DynamoDB for secure data storage.
-- Implementing security best practices for AWS services.
+This solution integrates:
 
-# Configuring Amazon S3 Object Lambda
+- ✅ **Amazon S3 Object Lambda** for document transformation
+- 🔐 **Amazon Cognito** for secure user authentication
+- 🧠 **AWS Lambda** (with Docker) for executing conversions
+- 🗃️ **DynamoDB** for metadata storage
+- 📡 **API Gateway** for exposing secure RESTful APIs
+- 🐳 **Docker & ECR** for packaging and deploying LibreOffice
 
-## Creating an S3 Object Lambda Access Point
+---
 
-1. Open the AWS S3 console and navigate to "Object Lambda Access Points".
-2. Click "Create Object Lambda Access Point" and provide a name.
-3. Select an existing S3 bucket as the data source.
-4. Attach a Lambda function for object transformation.
+## 📚 What You'll Learn
 
-## Configuring the Lambda Function for Object Transformation
+- How to build a **document transformation pipeline** using S3 Object Lambda
+- Authenticate and secure APIs using **JWT tokens with Cognito**
+- Deploy **Dockerized Lambda functions** from AWS ECR
+- Implement **secure, scalable architectures** with IAM, logging, and monitoring
+- Work with **DynamoDB** for efficient, serverless data storage
 
-1. Open the AWS Lambda console and create a new function.
-2. Choose a runtime (e.g., Python or Node.js) and configure the execution role.
-3. Implement the logic to modify and watermark documents retrieved via S3 Object Lambda.
-4. Deploy and attach the function to the Object Lambda Access Point.
+---
 
-## Updating S3 Bucket Policies for Object Lambda
+## 🧩 Architecture Diagram (Optional)
 
-1. Navigate to the S3 bucket and open the "Permissions" tab.
-2. Add an IAM policy to allow Object Lambda to access the S3 objects.
-3. Enable logging to monitor requests and transformations.
+> *(Include a simple diagram if you have one – e.g., draw.io or Lucidchart exported image)*
 
-# Implementing User Authentication
+---
 
-## Setting Up an Amazon Cognito User Pool
+## 🏗️ Step-by-Step Implementation
 
-1. Create a Cognito user pool in AWS.
-2. Configure user attributes and multi-factor authentication (MFA).
-3. Enable OAuth2 and JWT-based authentication for secure API requests.
+### 🔁 Configure Amazon S3 Object Lambda
 
-## Securing the REST API with Cognito Authorizers
+1. Go to **S3 > Object Lambda Access Points**
+2. Create a new access point and choose your source bucket
+3. Attach a Lambda function that will handle transformations (conversion + watermarking)
 
-1. Create an API Gateway endpoint.
-2. Enable Cognito Authorizers to handle user authentication.
-3. Configure request scopes to restrict access based on user roles.
+### 🔧 Set Up the Lambda Transformation Function
 
-# Building the Backend
+- Create a new Lambda function (Node.js or Python)
+- Assign the correct IAM role
+- Implement logic to:
+  - Fetch the original document from S3
+  - Convert to PDF and apply a watermark
+  - Return the transformed object
 
-## Storing User Data in DynamoDB
+> 💡 Tip: Use `console.log()` for debugging via CloudWatch logs
 
-1. Create a DynamoDB table for storing user and document metadata.
-2. Define partition and sort keys for efficient querying.
-3. Enable point-in-time recovery for data protection.
+---
 
-## Creating and Configuring the Lambda Function
+## 🔐 Secure the System with Cognito
 
-1. Create an AWS Lambda function to handle data processing.
-2. Enable API Gateway integration to trigger Lambda functions.
+### 👤 Amazon Cognito User Pool
 
-## Attaching IAM Policies for Secure Access
+- Create a **User Pool** with email/password login
+- Enable **OAuth 2.0 & JWT**
+- Optionally enable MFA
 
-1. Assign AmazonDynamoDBFullAccess policy to Lambda.
-2. Restrict API Gateway access using IAM permissions.
-3. Implement least privilege principles for IAM roles.
+### 🛡️ Secure API Gateway with Cognito
 
-## Implementing Logging with CloudWatch
+1. Create a **REST API** in API Gateway
+2. Add a **Cognito Authorizer** to verify JWTs
+3. Require the `Authorization` header for access
+4. Associate it with the Lambda methods
 
-1. Enable AWS CloudWatch logs for Lambda.
-2. Configure CloudWatch metrics for API performance tracking.
+---
+
+## 🧬 Build the Backend Logic
+
+### 🗃️ Store Metadata in DynamoDB
+
+- Table: `document_metadata`
+- Partition key: `user_id`
+- Sort key: `timestamp`
+- Enable Point-in-Time Recovery (PITR)
+
+### 🧠 Lambda for Metadata Handling
+
+- Lambda triggered by API Gateway
+- Handles:
+  - Inserting metadata
+  - Retrieving user-specific documents
+
+### 🔐 IAM Policies
+
+- Grant minimal permissions (`least privilege`)
+- Example: Only allow a Lambda to `PutItem` in DynamoDB
+- Use condition-based access for API Gateway
+
+---
 
 # Developing the Document Conversion Service
 
