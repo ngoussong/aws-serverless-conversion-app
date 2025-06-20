@@ -27,7 +27,7 @@ This solution integrates:
 
 ---
 
-## 🧩 Architecture Diagram (Optional)
+## 🧩 Architecture Diagram
 
 ![alt text](Figure-1.-Document-processing-architectural-diagram.png)
 
