@@ -29,7 +29,7 @@ This solution integrates:
 
 ## 🧩 Architecture Diagram (Optional)
 
-> *(Include a simple diagram if you have one – e.g., draw.io or Lucidchart exported image)*
+![alt text](Figure-1.-Document-processing-architectural-diagram.png)
 
 ---
 
